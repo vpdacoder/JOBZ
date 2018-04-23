@@ -5,13 +5,13 @@
 ## Link to Project Trello ##
 
 ## Technologies ##
-  -HTML and EJS
-  -Semantic UI
-  -CSS
-  -Node.js
-  -Express
-  -MongoDB and Mongoose
-  -OAuth
+  - HTML and EJS
+  - Semantic UI
+  - CSS
+  - Node.js
+  - Express
+  - MongoDB and Mongoose
+  - OAuth
 
 ## Prototype Main Page ##
 
