@@ -76,6 +76,7 @@ app.post("/signup",function(req,res){
   });
 });
 
+
 // ****LOGIN****
 //show login form
 app.get("/login", function(req,res){
@@ -90,8 +91,23 @@ app.post("/login",passport.authenticate("local", {
 
 });
 
+//middleware to check login status
+function isLoggedIn(req,res, next){
+  if(req.isAuthenticated()){
+    return next();
+  }
+   res.redirect("/login");
+}
 
-app.get('/collection', function(req, res) {
+
+app.get("/logout", function(req,res){
+  req.logout();
+  res.redirect("/");
+});
+
+
+
+app.get('/collection', isLoggedIn,function(req, res) {
     res.render('collections');
 });
 
