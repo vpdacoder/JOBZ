@@ -1,0 +1,41 @@
+<% include ./partials/header %>
+
+<head>
+  <style>
+    #loginform{
+      margin-top: 100px;
+      width: 50%;
+    }
+  </style>
+</head>
+
+<div id="loginform" class="ui container">
+  <div class="column">
+    <h2 class="ui black image header">
+      <div class="content">
+        Create your account
+      </div>
+    </h2>
+    <form action="/signup" method="POST" class="ui large form">
+      <div class="ui stacked segment">
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="user icon"></i>
+            <input type="text" name="username" placeholder="Username..">
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui left icon input">
+            <i class="lock icon"></i>
+            <input type="password" name="password" placeholder="Password">
+          </div>
+        </div>
+        <button class="ui fluid large black submit button">Sign-Up</button>
+      </div>
+    </form>
+
+    <div class="ui message">
+      Already a member? <a href="/login">Login</a>
+    </div>
+  </div>
+</div>

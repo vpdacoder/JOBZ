@@ -1,0 +1,44 @@
+<% include ../partials/header %>
+<head>
+  <style>
+    #mainform {
+      margin-top: 100px;
+    }
+  </style>
+</head>
+
+<div id="mainform" class="ui main text container segment">
+  <div class="ui huge header">
+    New Job
+  </div>
+  <form class="ui form"action="" method="POST">
+    <div class="field">
+      <label>Company</label>
+      <input type="text" name="job[company]" placeholder="company name">
+    </div>
+    <div class="field">
+      <label>Position</label>
+      <input type="text" name="job[position]" placeholder="position applied for..">
+    </div>
+    <div class="field">
+      <label>Date Applied</label>
+      <input type="text" name="job[date]" placeholder="date of application">
+    </div>
+    <div class="field">
+      <label>Location</label>
+      <input type="text" name="job[location]" placeholder="location of the company">
+    </div>
+    <div class="field">
+      <label>Job Board</label>
+      <input type="text" name="job[location]" placeholder="Where did you find the opening?">
+    </div>
+    <div class="field">
+      <label>Job Description</label>
+      <textarea name="job[description]"></textarea>
+    </div>
+    <input class="ui blue basic button" type="submit">
+  </form>
+</div>
+
+
+<% include ../partials/footer %>

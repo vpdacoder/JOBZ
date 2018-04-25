@@ -1,0 +1,44 @@
+<% include ../partials/header %>
+<head>
+  <style>
+    #mainform {
+      margin-top: 100px;
+    }
+  </style>
+</head>
+
+<div id="mainform" class="ui main text container segment">
+  <div class="ui huge header">
+    Add interview
+  </div>
+  <form class="ui form"action="" method="POST">
+    <div class="field">
+      <label>Company</label>
+      <input type="text" name="interview[company]" placeholder="company name">
+    </div>
+    <div class="field">
+      <label>Date</label>
+      <input type="text" name="interview[date]" placeholder="date of interview">
+    </div>
+    <div class="field">
+      <label>Interviewer's Name</label>
+      <input type="text" name="interview[intName]" placeholder="date of interview">
+    </div>
+    <div class="field">
+      <label>Interviewer's LinkedIn</label>
+      <input type="text" name="interview[intLi]" placeholder="date of interview">
+    </div>
+    <div class="field">
+      <label>Company Values</label>
+      <input type="text" name="interview[companyValues]" placeholder="date of application">
+    </div>
+    <div class="field">
+      <label>Company Website Link</label>
+      <input type="text" name="interview[website]" placeholder="website link">
+    </div>
+    <input class="ui blue basic button" type="submit">
+  </form>
+</div>
+
+
+<% include ../partials/footer %>
