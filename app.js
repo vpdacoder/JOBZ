@@ -1,17 +1,17 @@
 // SERVER-SIDE JAVASCRIPT
 
-var db = require('./models');
+var db                  = require('./models');
 
 /////////////////////////////
 //  SETUP and CONFIGURATION
 /////////////////////////////
 
 //require express in our app
-var express = require('express'),
-  bodyParser = require('body-parser'),
-  methodOverride = require('method-override'),
-  passport = require('passport'),
-  LocalStrategy = require('passport-local'),
+var express             = require('express'),
+  bodyParser            = require('body-parser'),
+  methodOverride        = require('method-override'),
+  passport              = require('passport'),
+  LocalStrategy         = require('passport-local'),
   passportLocalMongoose = require('passport-local-mongoose')
 
 // generate a new express app and call it 'app'
@@ -50,12 +50,26 @@ passport.use(new LocalStrategy(db.User.authenticate()));
 passport.serializeUser(db.User.serializeUser());
 passport.deserializeUser(db.User.deserializeUser());
 
+//MIDDLEWARE to check login status
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect("/login");
+}
+
+//making current user variable available everywhere
+app.use(function(req, res, next){
+   res.locals.currentUser = req.user;
+   next();
+});
+
 
 // *******************************
 // ROUTES
 // *******************************
 
-// index page
+// index/landing page
 app.get('/', function(req, res) {
   res.render('index');
 });
@@ -91,50 +105,33 @@ app.get("/login", function(req, res) {
 
 //handling login request
 app.post("/login", passport.authenticate("local", {
-  successRedirect: "/new",
+  successRedirect: "/collection",
   failureRedirect: "/login"
 }), function(req, res) {
 
 });
 
-//middleware to check login status
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect("/login");
-}
 
-
+// ****LOGOUT****
 app.get("/logout", function(req, res) {
   req.logout();
   res.redirect("/");
 });
 
 
-//Application cards route
-// app.get("/collection", function(req,res){
-//   db.User.applications.find({}, function(err, apps){
-//     if(err){
-//       console.log('Error');
-//     } else{
-//       res.render('collections',{apps:apps});
-//     }
-//   });
-// });
-
-app.get('/collection', isLoggedIn,function(req, res) {
-    let user = req.user;
-    res.render('collections', {apps: user.applications});
-});
 
 
-app.get('/new/int', function(req, res) {
-  res.render('./interview/new');
-});
 // ===================================
 //READ
 // ===================================
+
+
+// Showing all the applications of the current user
+app.get('/collection', isLoggedIn,function(req, res) {
+  let user = req.user;
+  res.render('collections', {apps: user.applications});
+});
+
 
 // ===================================
 //CREATE
@@ -146,43 +143,7 @@ app.get('/new', isLoggedIn, function(req, res) {
   res.render('./job/new');
 });
 
-
-// Creating New Application Card from the form
-// app.post("/new",function(req,res){
-//   db.App.create(req.body.job, function(err, newJob){
-//     if(err){
-//       res.render(err);
-//     }else {
-//       res.redirect("/collection");
-//     }
-//   });
-// })
-
-// app.post("/new",function(req,res){
-//   db.App.create(req.body.job, function(err, newJob){
-//     if(err){
-//       res.render(err);
-//     }else {
-//       res.redirect("/collection");
-//     }
-//   });
-// })
-
-// app.post("/new", function(req, res) {
-//   db.User.findById(req.user.id, function(err, user) {
-//     if (err) {
-//       res.render(err);
-//     } else {
-//       var appModel = new db.App();
-//       appModel = req.body.job ;
-//       user.applications.push(appModel);
-//       user.save();
-//       res.redirect("/");
-//     }
-//   });
-// });
-
-
+//Saving the data from Application form to the applications array
 app.post("/new", function(req, res) {
   db.User.findById(req.user.id, function(err, user) {
     if (err) {
@@ -196,6 +157,26 @@ app.post("/new", function(req, res) {
     }
   });
 });
+
+//Rendering the new Interview form
+app.get('/new/int', isLoggedIn, function(req, res) {
+  res.render('./interview/new');
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ===================================
 //EDIT ROUTE
