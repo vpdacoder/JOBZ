@@ -9,36 +9,36 @@
 
 <div id="mainform" class="ui main text container segment">
   <div class="ui huge header">
-    New Application
+    Edit Application
   </div>
   <form class="ui form" action="/new" method="POST">
     <div class="field">
       <label>Company</label>
-      <input type="text" name="job[company]" placeholder="company name">
+      <input type="text" name="job[company]" value="<%= app.company %>">
     </div>
     <div class="field">
       <label>Company Logo</label>
-      <input type="text" name="job[logo]" placeholder="company logo url">
+      <input type="text" name="job[logo]" value="<%= app.logo %>">
     </div>
     <div class="field">
       <label>Position</label>
-      <input type="text" name="job[position]" placeholder="position applied for..">
+      <input type="text" name="job[position]" value="<%= app.position %>">
     </div>
     <div class="field">
       <label>Date Applied</label>
-      <input type="text" name="job[date]" placeholder="date of application">
+      <input type="text" name="job[date]" value="<%= app.date %>">
     </div>
     <div class="field">
       <label>Location</label>
-      <input type="text" name="job[location]" placeholder="location of the company">
+      <input type="text" name="job[location]" value="<%= app.location %>">
     </div>
     <div class="field">
       <label>Job Board</label>
-      <input type="text" name="job[jobBoard]" placeholder="Where did you find the opening?">
+      <input type="text" name="job[jobBoard]" value="<%= app.jobBoard %>">
     </div>
     <div class="field">
       <label>Job Description</label>
-      <textarea name="job[description]"></textarea>
+      <textarea name="job[description]"><%= app.description %></textarea>
     </div>
     <input class="ui blue basic button" type="submit">
   </form>

@@ -165,32 +165,49 @@ app.get('/new/int', isLoggedIn, function(req, res) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ===================================
-//EDIT ROUTE
+//EDIT ROUTES
 // ===================================
+app.get("/application/:id/edit", function(req,res){
+  db.User.findById(res.locals.currentUser._id, function(error, user){
+    if(error){
+      res.redirect("/collection");
+    } else {
+      let app = user.applications.id(req.params.id);
+          res.render("./job/edit", {app:app});
+    }
+  });
+});
 
 // ===================================
 //UPDATE ROUTE
 // ===================================
 
+
+
 // ===================================
 //DESTROY ROUTE
 // ===================================
 
-
+//Deleting an application
+app.delete("/application/:id", function(req,res){
+  db.App.findByIdAndRemove(req.params.id, function(err){
+    console.log(req.params.id);
+    if(err){
+      console.log(err);
+    } else
+      db.User.findById(res.locals.currentUser._id, function(error, user){
+        if(error){
+          res.redirect("/collection");
+        }
+        user.applications.id(req.params.id).remove();
+        user.save(function(errorr){
+          console.log(errorr);
+          res.redirect("/collection");
+        });
+      });
+  });
+});
 
 app.listen(3000, function() {
   console.log('3000 is the magic port');
