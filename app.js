@@ -152,7 +152,7 @@ app.post("/new", function(req, res) {
       var appModel = new db.App();
       appModel = req.body.job ;
       db.App.create(appModel);
-      user.applications.push(appModel);
+      user.applications.unshift(appModel);
       user.save();
       res.redirect("/collection");
     }
@@ -169,7 +169,7 @@ app.get('/new/int', isLoggedIn, function(req, res) {
 // ===================================
 //EDIT ROUTES
 // ===================================
-app.get("/application/:id/edit", function(req,res){
+app.get("/application/:id/edit", isLoggedIn,function(req,res){
   db.User.findById(res.locals.currentUser._id, function(error, user){
     if(error){
       res.redirect("/collection");
@@ -216,47 +216,8 @@ app.delete("/application/:id", function(req,res){
       });
   });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Deleting an application
-app.delete("/application/:id", function(req,res){
-  db.App.findByIdAndRemove(req.params.id, function(err){
-    console.log(req.params.id);
-    if(err){
-      console.log(err);
-    } else
-      db.User.findById(req.user.id, function(error, user){
-        if(error){
-          res.redirect("/collection");
-        }
-        user.applications.id(req.params.id).remove();
-        user.save(function(errorr){
-          console.log(errorr);
-          res.redirect("/collection");
-        });
-      });
-  });
-});
-
-
-
-
 // res.locals.currentUser._id
 
-app.listen(3000, function() {
+app.listen(process.env.PORT || 3000, function() {
   console.log('3000 is the magic port');
 });
