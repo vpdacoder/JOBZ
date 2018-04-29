@@ -151,6 +151,7 @@ app.post("/new", function(req, res) {
     } else {
       var appModel = new db.App();
       appModel = req.body.job ;
+      db.App.create(appModel);
       user.applications.push(appModel);
       user.save();
       res.redirect("/collection");
@@ -183,6 +184,18 @@ app.get("/application/:id/edit", function(req,res){
 //UPDATE ROUTE
 // ===================================
 
+app.put("/application/:id", function(req,res){
+  var user = res.locals.currentUser
+  var app = user.applications.id(req.params.id);
+  app.remove();
+  var appModel = new db.App();
+  appModel = req.body.job ;
+  db.App.create(appModel);
+  user.applications.unshift(appModel);
+  user.save(function(err){
+    res.redirect("/collection");
+  });
+});
 
 
 // ===================================
@@ -191,12 +204,42 @@ app.get("/application/:id/edit", function(req,res){
 
 //Deleting an application
 app.delete("/application/:id", function(req,res){
+      db.User.findById(req.user.id, function(error, user){
+        if(error){
+          res.redirect("/collection");
+        } else
+        user.applications.id(req.params.id).remove();
+        user.save(function(errorr){
+          console.log(errorr);
+          res.redirect("/collection");
+        });
+      });
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//Deleting an application
+app.delete("/application/:id", function(req,res){
   db.App.findByIdAndRemove(req.params.id, function(err){
     console.log(req.params.id);
     if(err){
       console.log(err);
     } else
-      db.User.findById(res.locals.currentUser._id, function(error, user){
+      db.User.findById(req.user.id, function(error, user){
         if(error){
           res.redirect("/collection");
         }
@@ -208,6 +251,11 @@ app.delete("/application/:id", function(req,res){
       });
   });
 });
+
+
+
+
+// res.locals.currentUser._id
 
 app.listen(3000, function() {
   console.log('3000 is the magic port');
