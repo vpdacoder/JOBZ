@@ -91,9 +91,8 @@ app.get("/signup", function(req, res) {
 
 //handling user sign up
 app.post("/signup", function(req, res) {
-  db.User.register(new db.User({
-    username: req.body.username
-  }), req.body.password, function(err, user) {
+  db.User.register(new db.User(
+    {username: req.body.username}), req.body.password, function(err, user) {
     if (err) {
       console.log(err);
       return res.render("signup");
