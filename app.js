@@ -10,6 +10,7 @@ var db                  = require('./models');
 var express             = require('express'),
   bodyParser            = require('body-parser'),
   methodOverride        = require('method-override'),
+  flash                 = require('connect-flash'),
   passport              = require('passport'),
   LocalStrategy         = require('passport-local'),
   passportLocalMongoose = require('passport-local-mongoose')
@@ -33,6 +34,11 @@ app.set('view engine', 'ejs');
 //Use this for any requests with _method
 app.use(methodOverride("_method"));
 
+//Using flash
+app.use(flash());
+
+
+
 // ==============================
 // PASSPORT AND SESSIONS CONFIG
 // ==============================
@@ -40,7 +46,7 @@ app.use(methodOverride("_method"));
 app.use(require("express-session")({
   secret: "We gonna be alright",
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -82,7 +88,6 @@ app.get("/signup", function(req, res) {
 
 //handling user sign up
 app.post("/signup", function(req, res) {
-  console.log(req.user);
   db.User.register(new db.User({
     username: req.body.username
   }), req.body.password, function(err, user) {
@@ -216,7 +221,6 @@ app.delete("/application/:id", function(req,res){
       });
   });
 
-// res.locals.currentUser._id
 
 app.listen(process.env.PORT || 3000, function() {
   console.log('3000 is the magic port');
