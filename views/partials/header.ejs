@@ -24,8 +24,25 @@
           <a href="/new" class="item">New App</a>
           <a href="/collection" class="item">Add Interview</a>
           <div class="right menu">
+            <a href="#" class="ui item">Signed in as: <%= currentUser.username %></a>
             <a href="/logout" class="ui item"><i class="sign out alternate icon"></i>Logout</a>
           </div>
       <%  } %>
     </div>
   </div>
+
+<% if(error && error.length > 0) { %>
+  <div id="success" class="ui container warning message">
+  <div class="header">
+    <%= error %>
+  </div>
+</div>
+<% } %>
+
+<% if(success && success.length > 0) { %>
+<div id="error" class="ui container success message alert">
+  <div class="header">
+    <%= success %>
+  </div>
+</div>
+<% } %>

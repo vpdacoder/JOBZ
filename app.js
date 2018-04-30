@@ -61,12 +61,15 @@ function isLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   }
+  req.flash("error","You must register before you can do that!");
   res.redirect("/login");
 }
 
 //making current user variable available everywhere
 app.use(function(req, res, next){
    res.locals.currentUser = req.user;
+   res.locals.error = req.flash("error");
+   res.locals.success = req.flash("success");
    next();
 });
 
@@ -120,6 +123,7 @@ app.post("/login", passport.authenticate("local", {
 // ****LOGOUT****
 app.get("/logout", function(req, res) {
   req.logout();
+  req.flash("success","You logged out successfully");
   res.redirect("/");
 });
 

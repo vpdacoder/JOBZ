@@ -25,7 +25,7 @@
     <div id="display" class="ui link cards">
     <div class="card">
       <div class="image">
-        <img src= "<%= app.logo %>">
+        <img src= "<%= app.logo %>" width="290" height="290">
       </div>
       <div class="content">
         <div class="header"><%= app.position %></div>
@@ -33,7 +33,7 @@
           <a><%= app.date %></a>
         </div>
         <div class="description">
-          <%= app.description %>
+          <%= app.description.substring(0,40) %>
         </div>
       </div>
       <div class="extra content">
