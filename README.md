@@ -1,5 +1,5 @@
 # JOBZ #
-https://pure-retreat-44649.herokuapp.com/
+https://jobzapp.herokuapp.com/
 
 ## Description and Motivation
 Jobz is a simple application built to track job applications and interviews in one place. It prompts users to fill out useful information to make their job tracking easy and efficient.
