@@ -24,7 +24,7 @@ app.use(express.static('public'));
 // body parser config to accept our datatypes
 app.use(bodyParser.urlencoded({
   extended: true
-}));
+}));  
 
 
 // set the view engine to ejs
